@@ -1,3 +1,5 @@
+using ChatServer.Hubs;
+
 namespace ChatServer
 {
     public class Program
@@ -5,10 +7,12 @@ namespace ChatServer
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddSignalR();
             var app = builder.Build();
 
-            app.MapGet("/", () => "Hello World!");
-
+            app.MapHub<ChatHub>("/chat");
+          
             app.Run();
         }
     }
