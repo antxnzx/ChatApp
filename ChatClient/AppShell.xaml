@@ -8,11 +8,7 @@
     xmlns:models="clr-namespace:ChatClient.Models"
     Style="{StaticResource MyTabBar}">
 
-    <ShellContent
-        FlyoutItemIsVisible="False"
-        Shell.FlyoutBehavior="Disabled"
-        ContentTemplate="{DataTemplate views:LoadingPage}"
-        Route="LoadingPage" />
+
     <ShellContent
         Title="Login Page"
         FlyoutItemIsVisible="False"
@@ -27,9 +23,7 @@
                 ContentTemplate="{DataTemplate views:HomePage}" />
         </Tab>
         <Tab Title="Menu" Icon="{x:Static models:Icons.Menu500}">
-            <ShellContent
-                
-                ContentTemplate="{DataTemplate views:ServicesPage}"/>
+           
         </Tab>
         <Tab Title="Profile" Icon="{x:Static models:Icons.Person500}">
             <ShellContent

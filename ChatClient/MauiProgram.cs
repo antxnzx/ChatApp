@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using ChatClient.ViewModels;
+using ChatClient.Views;
+using Microsoft.Extensions.Logging;
 
 namespace ChatClient
 {
@@ -18,6 +20,15 @@ namespace ChatClient
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
+            builder.Services.AddSingleton<LoginPage>();
+            builder.Services.AddSingleton<HomePage>();
+
+            builder.Services.AddSingleton<ProfilePage>();
+
+            builder.Services.AddSingleton<LoginPageViewModel>();
+            builder.Services.AddSingleton<HomePageViewModel>();
+
+            builder.Services.AddSingleton<ProfilePageViewModel>();
 
             return builder.Build();
         }

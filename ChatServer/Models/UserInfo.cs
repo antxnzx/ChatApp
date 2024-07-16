@@ -6,6 +6,6 @@
         public string UserLogin { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
-        public bool isAdmin { get; set; }
+        public int isAdmin { get; set; }
     }
 }

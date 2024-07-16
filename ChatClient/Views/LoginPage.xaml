@@ -33,7 +33,7 @@
                    HorizontalOptions="Center"
                    BorderColor="Black">
 
-                    <Image Source="pgups.svg" Aspect="AspectFill" Margin="0"/>
+                    
                 </Frame>
 
             </StackLayout>
