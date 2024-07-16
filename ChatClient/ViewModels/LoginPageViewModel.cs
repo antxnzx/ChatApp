@@ -6,7 +6,7 @@ using ChatClient.Views;
 using ChatClient.ViewModels;
 
 
-namespace PgupsApp.ViewModels
+namespace ChatClient.ViewModels
 {
     public partial class LoginPageViewModel : BaseViewModel
     {
