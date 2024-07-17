@@ -19,15 +19,54 @@ namespace ChatServer
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.Map("/login", async (DataBaseContext db, HttpContext context) => {
-                string? login = context.Request.Query["login"];
-                string? password = context.Request.Query["password"];
+                Logininfo? info = await context.Request.ReadFromJsonAsync<Logininfo>();
                 bool response = false;
-                if (!String.IsNullOrWhiteSpace(login)&& !String.IsNullOrWhiteSpace(password))
+                if (info != null)
                 {
-                    response = await LoginService.CheckLogin(db, login, password);
+                    response = await LoginService.CheckLogin(db,info);
                 }
                 return response;
-            }); 
+            });
+            
+            
+            app.Map("/register/{dbid:int}", async (DataBaseContext db, HttpContext context, int dbid) =>
+            {
+                bool response = false;
+                switch (dbid)
+                {
+                    case 1:
+                        UserLoginInfo? info2 = await context.Request.ReadFromJsonAsync<UserLoginInfo>();
+                        if (info2 != null)
+                        {
+                            response = await LoginService.RegisterUser(db, info2);
+                        }
+                        break;
+                    case 2:
+                        UserInfo? info = await context.Request.ReadFromJsonAsync<UserInfo>();
+                        if (info != null)
+                        {
+                            response = await LoginService.RegisterUser(db, info);
+                        }
+                        break;
+                }
+
+
+                return response;
+
+            });
+
+
+            app.Map("/profile", async (DataBaseContext db, HttpContext context) =>
+            {
+                UserInfo? user = await DbRequests.GetUserInfo(db, context);
+                return user;
+                
+            });
+
+            app.Map("/subs", async (DataBaseContext db, HttpContext context) =>
+            {
+                return await DbRequests.GetUserSubs(db, context);
+            });
             app.MapHub<ChatHub>("/chat");
             
             app.Run();

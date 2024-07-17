@@ -6,20 +6,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ChatClient.Models;
+using System.Net.Http.Json;
 
 namespace ChatClient.ViewModels
 {
     public partial class ProfilePageViewModel : BaseViewModel
     {
         [ObservableProperty]
-        private string _name;
-        [ObservableProperty]
-        private string _surname;
-
-        public ProfilePageViewModel() 
+        private UserBasicInfo? user;
+       
+    
+        public  ProfilePageViewModel() 
         {
-            Name = App.UserDetails.Name;
-            Surname = App.UserDetails.Surname;
+            user = App.UserDetails;  
         }
 
         [RelayCommand]
@@ -32,5 +32,8 @@ namespace ChatClient.ViewModels
 
             await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
         }
+
+        
     }
+
 }

@@ -22,11 +22,13 @@ namespace ChatClient
 #endif
             builder.Services.AddSingleton<LoginPage>();
             builder.Services.AddSingleton<HomePage>();
+            builder.Services.AddSingleton<RegisterPage>();
 
             builder.Services.AddSingleton<ProfilePage>();
 
             builder.Services.AddSingleton<LoginPageViewModel>();
             builder.Services.AddSingleton<HomePageViewModel>();
+            builder.Services.AddSingleton<RegisterPageViewModel>();
 
             builder.Services.AddSingleton<ProfilePageViewModel>();
 

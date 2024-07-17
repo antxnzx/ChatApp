@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ChatClient.Views.RegisterPage"
+             Title="RegisterPage"
+            xmlns:viewModels="clr-namespace:ChatClient.ViewModels"
+             xmlns:models="clr-namespace:ChatClient.Models"
+             Shell.NavBarIsVisible="False"
+             NavigationPage.HasNavigationBar="True">
+        <ContentPage.BindingContext>
+            <viewModels:RegisterPageViewModel x:Name="viewModel"/>
+        </ContentPage.BindingContext>
+        <ScrollView >
+            <Grid BackgroundColor="{StaticResource ForegroundColor}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="180"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+
+                <BoxView Color="{StaticResource MainColor}" 
+               HeightRequest="90" 
+               CornerRadius="0, 0, 10, 10"
+               VerticalOptions="Start"
+               Margin="0"/>
+
+                <Grid RowSpacing="5" Grid.Row="1" Margin="20,20,20,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="1" 
+                   Text="Введите свои данные"
+                   HorizontalOptions="Center" 
+                   FontSize="Title" 
+                   FontAttributes="Bold" 
+                   Padding="0"
+                   Margin="0"/>
+                    <Label Grid.Row="2" 
+                       Text="{Binding Logininfo}" 
+                       HorizontalOptions="Center" 
+                       FontSize="Subtitle" 
+                       FontAttributes="None"
+                       TextColor="Red"
+                       Padding="0"
+                       Margin="0"/>
+
+                    <StackLayout Grid.Row="3" 
+                         Orientation="Vertical" 
+                         HorizontalOptions="Center"
+                         MinimumWidthRequest="370">
+
+                    <Frame BackgroundColor="Transparent"
+                            BorderColor="{StaticResource LightGreenColor}"
+                      
+                            Padding="0"
+                            HorizontalOptions="Center"
+                            CornerRadius="30">
+                        <StackLayout Orientation="Horizontal">
+
+                            <Entry Text="{Binding Name}"
+                                Placeholder="Имя"
+                                TextColor="Black"
+                                FontAttributes="Bold"
+                                VerticalOptions="Center"
+                                HorizontalOptions="Fill"
+                                    WidthRequest="290"
+                                Margin="40, 0, 40, 0"/>
+                        </StackLayout>
+
+                    </Frame>
+
+                    <Frame BackgroundColor="Transparent"
+                        BorderColor="{StaticResource LightGreenColor}"
+                        Margin="0, 15, 0, 0"
+                        Padding="0"
+                        HorizontalOptions="Center"
+                        CornerRadius="30">
+                        <StackLayout Orientation="Horizontal">
+
+                        <Entry Text="{Binding Surname}"
+                            Placeholder="Фамилия"
+                            TextColor="Black"
+                            FontAttributes="Bold"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Fill"
+                                WidthRequest="290"
+                            Margin="40, 0, 40, 0"/>
+                        </StackLayout>
+
+                    </Frame>
+                        
+                    <Frame BackgroundColor="Transparent"
+                       BorderColor="{StaticResource LightGreenColor}"
+                       Padding="0"
+                           Margin="0, 15, 0, 0"
+                       HorizontalOptions="Center"
+                       CornerRadius="30">
+                            <StackLayout Orientation="Horizontal">
+                                <Entry Text="{Binding EmailLog}"
+                               Placeholder="Имя пользователя"
+                               TextColor="Black"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Fill"
+                                   WidthRequest="290"
+                               Margin="40, 0, 40, 0"/>
+                            </StackLayout>
+
+                        </Frame>
+
+                        <Frame BackgroundColor="Transparent"
+                               BorderColor="{StaticResource LightGreenColor}"
+                               Margin="0, 15, 0, 0"
+                               Padding="0"
+                               HorizontalOptions="Fill"
+                               CornerRadius="30">
+                            <StackLayout Orientation="Horizontal">
+                                
+                                <Entry Text="{Binding Password}"
+                               Placeholder="Пароль"
+                               IsPassword="True"
+                               TextColor="Black"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"
+                                   WidthRequest="290"
+                               Margin="40, 0, 40, 0"/>
+                            </StackLayout>
+
+                        </Frame>
+                            <Button Text="Зарегистрироваться" 
+                        BackgroundColor="{StaticResource MainColor}"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        CornerRadius="30"
+                        WidthRequest="200"
+                        Margin="0, 15, 0, 0"
+                        Command="{Binding RegisterCommand}"/>
+                        
+                    </StackLayout>
+                </Grid>
+
+            </Grid>
+        </ScrollView>
+ 
+</ContentPage>

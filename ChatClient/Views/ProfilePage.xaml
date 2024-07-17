@@ -13,13 +13,13 @@
     </ContentPage.BindingContext>
     <Grid RowSpacing="5" Padding="0,0,0,7">
         <Grid.RowDefinitions>
-            <RowDefinition Height="220"/>
-            <RowDefinition Height="70"/>
+            <RowDefinition Height="120"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="70" />
         </Grid.RowDefinitions>
         <BoxView Color="{StaticResource ForegroundColor}" 
-                 HeightRequest="220"
+                 HeightRequest="120"
                  CornerRadius="0, 0, 10, 10"
                  Margin="0"
                  VerticalOptions="Start"
@@ -27,39 +27,51 @@
                  />
        
         <StackLayout Grid.Row="0">
-            <Frame  
-                   HeightRequest="120" 
-                   WidthRequest="120" 
-                   CornerRadius="60" 
-                   Padding="0" 
-                   Margin="0, 15, 0, 0" 
-                   HorizontalOptions="Center"
-                   BorderColor="{StaticResource MainColor}">
-
-                <Image Source="avatar.jpeg" Aspect="AspectFill" Margin="0"/>
-            </Frame>
+            <HorizontalStackLayout Spacing="7" HorizontalOptions="Center"
+                       Margin="0, 20, 0, 0">
+                <Label Text="Логин:" FontSize="Title"/>
+                <Label x:Name="Login" Text="{Binding User.Login}" FontSize="Title"/>
+            </HorizontalStackLayout>
             <HorizontalStackLayout Spacing="7" HorizontalOptions="Center"
                                    Margin="0, 20, 0, 0">
-                <Label x:Name="Name" Text="{Binding Name}" FontSize="Title"/>
-                <Label x:Name="Surname" Text="{Binding Surname}" FontSize="Title"/>
+                <Label x:Name="Name" Text="{Binding User.Name}" FontSize="Title"/>
+                <Label x:Name="Surname" Text="{Binding User.Surname}" FontSize="Title"/>
             </HorizontalStackLayout>
         </StackLayout>
 
         <BoxView Color="{StaticResource ForegroundColor}" 
-                 HeightRequest="70"
-                 CornerRadius="10"
-                 Margin="0"
-                 VerticalOptions="Start"
-                 Grid.Row="1"
-                 />
-        <VerticalStackLayout Grid.Row="1" Margin="10" >
-            <HorizontalStackLayout VerticalOptions="Center">
-                <Label Text="Прогресс выполнения заданий: " FontSize="Subtitle"/>
-                <Label Text="30%" FontSize="Subtitle"/>
-            </HorizontalStackLayout>
-            <ProgressBar Progress="0.3"
-                         ProgressColor="{StaticResource MainColor}" VerticalOptions="Center"/>
-        </VerticalStackLayout>
+         HeightRequest="40"
+         CornerRadius="0, 0, 10, 10"
+         Margin="0"
+         VerticalOptions="Start"
+         Grid.Row="1"
+         />
+        <Label Text="Подписки:" FontSize="Title" Grid.Row="1" HorizontalOptions="Center"/>
+        <ScrollView Grid.Row="2" Grid.RowSpan="0" >
+            <CollectionView x:Name="dictList" ItemsSource="{Binding User.Subscriptions}"
+                        SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+
+                        <Grid Style="{StaticResource Test}" Margin="5, 5, 5, 5" Padding="0,0,0,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="60"/>
+                            </Grid.RowDefinitions>
+                            <BoxView  Grid.Column="0" 
+                                 Color="{StaticResource ForegroundColor}" 
+                                 CornerRadius="15"/>
+                            <Label VerticalOptions="Center" 
+                               HorizontalOptions="Center"
+                               Grid.Column="0" FontSize="Subtitle" Text="{Binding Subscription}" />
+                        </Grid>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
 
         <BoxView Color="{StaticResource ForegroundColor}" 
                  HeightRequest="70"
