@@ -17,5 +17,10 @@ namespace ChatServer.Hubs
                 .Group(connetion.ChatRoom)
                 .ReceiveMessage("Admin", "test");
         }
+
+        public void NotifyUsers(string login)
+        {
+             Console.WriteLine($"{login}");
+        }
     }
 }

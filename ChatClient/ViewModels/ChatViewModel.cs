@@ -22,10 +22,7 @@ namespace ChatClient.ViewModels
 
         public ChatViewModel()
         {
-            hubConnection = new HubConnectionBuilder()
-                .WithUrl("http://localhost:5267/chat")
-                .WithAutomaticReconnect()
-                .Build();
+            
         }
     }
 }

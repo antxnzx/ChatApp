@@ -5,6 +5,7 @@ using ChatClient.Models;
 using ChatClient.Views;
 using ChatClient.ViewModels;
 using System.Net.Http.Json;
+using Microsoft.AspNetCore.SignalR.Client;
 
 
 
@@ -47,7 +48,8 @@ namespace ChatClient.ViewModels
 
                 if (isUserDataAccepted)
                 {
-                    UserBasicInfo basicInfo = new() { 
+                    UserBasicInfo basicInfo = new()
+                    {
                         Login = EmailLog
                     };
                     await GetInformation(basicInfo);
@@ -60,7 +62,19 @@ namespace ChatClient.ViewModels
                     Preferences.Set(nameof(App.UserDetails), userDetailStr);
                     App.UserDetails = basicInfo;
 
-
+                    App.hubConnection = new HubConnectionBuilder()
+                                            .WithUrl("http://localhost:5000/chat")
+                                            .WithAutomaticReconnect()
+                                            .Build();
+                    try
+                    {
+                        await App.hubConnection.StartAsync();
+                        await App.hubConnection.InvokeAsync("NotifyUsers", basicInfo.Login);
+                    }
+                    catch (Exception)
+                    {
+                        
+                    }
                     await Shell.Current.GoToAsync($"//{nameof(HomePage)}");
                 }
                 else
@@ -76,12 +90,13 @@ namespace ChatClient.ViewModels
         async Task GetInformation(UserBasicInfo basicInfo)
         {
             Uri uri = new Uri(string.Format($"http://localhost:5000/profile?login={basicInfo.Login}", string.Empty));
- 
-            UserInfo? userInfo =  await client.GetFromJsonAsync<UserInfo>(uri);
+
+            UserInfo? userInfo = await client.GetFromJsonAsync<UserInfo>(uri);
             if (userInfo != null)
             {
                 basicInfo.Surname = userInfo.Surname;
                 basicInfo.Name = userInfo.Name;
+                basicInfo.IsAdmin = userInfo.IsAdmin;
             }
             uri = new Uri(string.Format($"http://localhost:5000/subs?login={basicInfo.Login}", string.Empty));
             List<UserSubs>? userSubs = await client.GetFromJsonAsync<List<UserSubs>>(uri);

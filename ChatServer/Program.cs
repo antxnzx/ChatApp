@@ -10,14 +10,15 @@ namespace ChatServer
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            builder.Services.AddCors();
             builder.Services.AddSignalR();
             builder.Services.AddDbContext<DataBaseContext>(opt => opt.UseSqlite("Data Source=db.db;"));
 
             var app = builder.Build();
-
+            app.UseCors(builder => builder.AllowAnyOrigin());
             app.UseDefaultFiles();
             app.UseStaticFiles();
+
             app.Map("/login", async (DataBaseContext db, HttpContext context) => {
                 Logininfo? info = await context.Request.ReadFromJsonAsync<Logininfo>();
                 bool response = false;
