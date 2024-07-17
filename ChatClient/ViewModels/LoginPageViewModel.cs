@@ -26,7 +26,8 @@ namespace ChatClient.ViewModels
 
         public LoginPageViewModel()
         {
-            client = new HttpClient();
+            App.httpClient = new HttpClient();
+            client = App.httpClient;
 
         }
 
@@ -38,49 +39,58 @@ namespace ChatClient.ViewModels
                 && !string.IsNullOrWhiteSpace(Password))
             {
                 Logininfo data = new(EmailLog, Password);
-                HttpResponseMessage response = await client.PostAsJsonAsync(uri, data);
-                bool? check = await response.Content.ReadFromJsonAsync<bool>();
-                if (check != null)
+                try
                 {
-                    isUserDataAccepted = (bool)check;
+                    HttpResponseMessage response = await client.PostAsJsonAsync(uri, data);
+                    bool? check = await response.Content.ReadFromJsonAsync<bool>();
+                    if (check != null)
+                    {
+                        isUserDataAccepted = (bool)check;
 
+                    }
+
+                    if (isUserDataAccepted)
+                    {
+                        UserBasicInfo basicInfo = new()
+                        {
+                            Login = EmailLog
+                        };
+                        await GetInformation(basicInfo);
+
+                        if (Preferences.ContainsKey(nameof(App.UserDetails)))
+                        {
+                            Preferences.Remove(nameof(App.UserDetails));
+                        }
+                        string userDetailStr = JsonConvert.SerializeObject(basicInfo);
+                        Preferences.Set(nameof(App.UserDetails), userDetailStr);
+                        App.UserDetails = basicInfo;
+
+                        App.hubConnection = new HubConnectionBuilder()
+                                                .WithUrl("http://localhost:5000/chat")
+                                                .WithAutomaticReconnect()
+                                                .Build();
+                        try
+                        {
+                            await App.hubConnection.StartAsync();
+                            await App.hubConnection.InvokeAsync("NotifyUsers", basicInfo.Login);
+                        }
+                        catch (Exception)
+                        {
+
+                        }
+                        await Shell.Current.GoToAsync($"//{nameof(HomePage)}");
+                    }
+                    else
+                    {
+                        Logininfo = "Неверные данные для входа";
+                    }
+                }
+                catch (Exception)
+                {
+                    Logininfo = "Нет связи с сервером";
+                    
                 }
 
-                if (isUserDataAccepted)
-                {
-                    UserBasicInfo basicInfo = new()
-                    {
-                        Login = EmailLog
-                    };
-                    await GetInformation(basicInfo);
-
-                    if (Preferences.ContainsKey(nameof(App.UserDetails)))
-                    {
-                        Preferences.Remove(nameof(App.UserDetails));
-                    }
-                    string userDetailStr = JsonConvert.SerializeObject(basicInfo);
-                    Preferences.Set(nameof(App.UserDetails), userDetailStr);
-                    App.UserDetails = basicInfo;
-
-                    App.hubConnection = new HubConnectionBuilder()
-                                            .WithUrl("http://localhost:5000/chat")
-                                            .WithAutomaticReconnect()
-                                            .Build();
-                    try
-                    {
-                        await App.hubConnection.StartAsync();
-                        await App.hubConnection.InvokeAsync("NotifyUsers", basicInfo.Login);
-                    }
-                    catch (Exception)
-                    {
-                        
-                    }
-                    await Shell.Current.GoToAsync($"//{nameof(HomePage)}");
-                }
-                else
-                {
-                    Logininfo = "Неверные данные для входа";
-                }
             }
             else
             {
@@ -94,6 +104,7 @@ namespace ChatClient.ViewModels
             UserInfo? userInfo = await client.GetFromJsonAsync<UserInfo>(uri);
             if (userInfo != null)
             {
+                basicInfo.id = userInfo.Id;
                 basicInfo.Surname = userInfo.Surname;
                 basicInfo.Name = userInfo.Name;
                 basicInfo.IsAdmin = userInfo.IsAdmin;

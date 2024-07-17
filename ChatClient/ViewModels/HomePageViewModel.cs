@@ -1,11 +1,10 @@
-﻿using ChatClient.ViewModels;
+﻿
+using ChatClient.Models;
+
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using System.Net.Http.Json;
+
 
 namespace ChatClient.ViewModels
 {
@@ -13,13 +12,28 @@ namespace ChatClient.ViewModels
     {
         [ObservableProperty]
         private bool admin = false;
-        public HomePageViewModel() 
+        [ObservableProperty]
+        private List<UserInfo> users = [];
+        public HomePageViewModel()
         {
             admin = App.UserDetails.IsAdmin == 1;
         }
 
-        
+        public async Task GetAllUsers()
+        {
+            Uri uri = new Uri(string.Format($"http://localhost:5000/users", string.Empty));
+            HttpClient client = App.httpClient;
+            if (client != null)
+            {
+                List<UserInfo>? usersfromdb = await client.GetFromJsonAsync<List<UserInfo>>(uri);
+                if (usersfromdb != null)
+                {
+                    Users.AddRange(usersfromdb);
+                }
+            }
+        }
 
-        
+
+
     }
 }

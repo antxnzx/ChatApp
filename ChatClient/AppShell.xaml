@@ -22,8 +22,8 @@
                 
                 ContentTemplate="{DataTemplate views:HomePage}" />
         </Tab>
-        <Tab Title="Menu" Icon="{x:Static models:Icons.Menu500}">
-           
+        <Tab Title="Chats" Icon="{x:Static models:Icons.Menu500}">
+            <ShellContent ContentTemplate="{DataTemplate views:AllChatsPage}"/>
         </Tab>
         <Tab Title="Profile" Icon="{x:Static models:Icons.Person500}">
             <ShellContent

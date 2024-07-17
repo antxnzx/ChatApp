@@ -16,11 +16,12 @@ namespace ChatServer.Hubs
             await Clients
                 .Group(connetion.ChatRoom)
                 .ReceiveMessage("Admin", "test");
+            await Console.Out.WriteLineAsync("afasfasf");
         }
 
         public void NotifyUsers(string login)
         {
-             Console.WriteLine($"{login}");
+             Console.WriteLine($"{login}"); 
         }
     }
 }

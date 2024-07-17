@@ -7,6 +7,7 @@ namespace ChatClient
     {
         public static UserBasicInfo? UserDetails;
         public static HubConnection? hubConnection;
+        public static HttpClient? httpClient;
         public App()
         {
             InitializeComponent();

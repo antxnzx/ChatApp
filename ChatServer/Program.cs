@@ -68,6 +68,11 @@ namespace ChatServer
             {
                 return await DbRequests.GetUserSubs(db, context);
             });
+
+            app.Map("/users", async (DataBaseContext db, HttpContext context) =>
+            {
+                return await DbRequests.GetUsers(db, context);
+            }); 
             app.MapHub<ChatHub>("/chat");
             
             app.Run();

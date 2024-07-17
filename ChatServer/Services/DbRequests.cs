@@ -28,12 +28,22 @@ namespace ChatServer.Services
             if (!string.IsNullOrWhiteSpace(Login))
             {
 
-                 subs = await db.UserSubs
-                  .Where(u => u.UserLogin == Login)
-                  .ToListAsync();
+                subs = await db.UserSubs
+                 .Where(u => u.UserLogin == Login)
+                 .ToListAsync();
 
             }
             return subs;
+        }
+
+        public static async Task<List<UserInfo>> GetUsers(DataBaseContext db, HttpContext context)
+        {
+
+            List<UserInfo> users = [];
+
+            users = await db.UserInfo.ToListAsync();
+
+            return users;
         }
     }
 }

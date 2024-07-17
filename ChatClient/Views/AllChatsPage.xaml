@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ChatClient.Views.HomePage"
+             x:Class="ChatClient.Views.AllChatsPage"
              xmlns:viewModels="clr-namespace:ChatClient.ViewModels"
-             Title="Домашняя страница"
+             Title="Чаты"
              Shell.BackgroundColor="{StaticResource MainColor}"
              BackgroundColor="{StaticResource BackgroundColor}"
              NavigationPage.HasNavigationBar="False"
@@ -11,40 +11,11 @@
              Shell.TabBarIsVisible="True">
 
     <ContentPage.BindingContext>
-        <viewModels:HomePageViewModel x:Name="viewModel"/>
+        <viewModels:AllChatsViewModel x:Name="viewModel"/>
     </ContentPage.BindingContext>
-    
-    <ScrollView>
+
+   
         <VerticalStackLayout Spacing="10" Padding="0,10">
-            <Frame  CornerRadius="15" 
-                    BackgroundColor="{StaticResource ForegroundColor}"
-                    Padding="5"
-                    Margin="0"
->
-                <Label 
-                    Text="Добро пожаловать в приложение чата"
-                    Style="{StaticResource AllText}" 
-                    HorizontalOptions="Center"
-                    FontSize="30"
-                    FontAttributes="Bold"
-                    />
-            </Frame>
-            <Frame  CornerRadius="15" 
-                    BackgroundColor="{StaticResource ForegroundColor}"
-                    Padding="5"
-                    IsVisible="{Binding Admin}">
-                <Button Text="Панель администратора" 
-                        IsVisible="{Binding Admin}"
-                        BackgroundColor="{StaticResource MainColor}"
-                        TextColor="White"
-                        FontAttributes="Bold"
-                        CornerRadius="30"
-                        WidthRequest="200"
-                        Margin="0, 15, 0, 0"
-                        />
-
-            </Frame>
-
             <VerticalStackLayout>
                 <Frame Margin="0,0,0,10" CornerRadius="15"  BackgroundColor="{StaticResource ForegroundColor}">
                     <Label Style="{StaticResource AllText}"
@@ -54,7 +25,9 @@
                 </Frame>
                 <ScrollView Grid.Row="2" Grid.RowSpan="0" >
                     <CollectionView  ItemsSource="{Binding Users}"
-                        SelectionMode="None">
+                        SelectionMode="Single"
+                        SelectionChangedCommand="{Binding StartChatCommand}"
+                        SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=SelectedItem}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
 
@@ -87,7 +60,7 @@
                                                    Text="{Binding Name}" />
                                         </HorizontalStackLayout>
                                     </VerticalStackLayout>
-                                    
+
                                 </Grid>
 
                             </DataTemplate>
@@ -96,7 +69,6 @@
                 </ScrollView>
             </VerticalStackLayout>
         </VerticalStackLayout>
-    </ScrollView>
 
 
 

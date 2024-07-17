@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ChatClient.Views.ChatView"
+             Title="ChatView"         
+             xmlns:viewModels="clr-namespace:ChatClient.ViewModels"
+
+         Shell.BackgroundColor="{StaticResource MainColor}"
+         BackgroundColor="{StaticResource BackgroundColor}"
+         NavigationPage.HasNavigationBar="True"
+         Shell.NavBarIsVisible="False"
+         Shell.TabBarIsVisible="False">
+
+    <ContentPage.BindingContext>
+        <viewModels:ChatViewModel x:Name="viewModel"/>
+    </ContentPage.BindingContext>
+
+
+    <VerticalStackLayout Spacing="10" Padding="0,10">
+        <VerticalStackLayout>
+            <Frame Margin="0,0,0,10" CornerRadius="15"  BackgroundColor="{StaticResource ForegroundColor}">
+                <Label Style="{StaticResource AllText}"
+                       Text="Все пользователи чата"
+                       FontSize="Title"
+                       FontAttributes="Bold"/>
+            </Frame>
+            <ScrollView Grid.Row="2" Grid.RowSpan="0" >
+                <CollectionView  ItemsSource="{Binding Messages}">
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+
+                            <Grid Style="{StaticResource Test}" Margin="5, 5, 5, 5" Padding="0,0,0,5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="60"/>
+                                </Grid.RowDefinitions>
+                                <BoxView  Grid.Column="0" 
+                     Color="{StaticResource ForegroundColor}" 
+                     CornerRadius="15"/>
+                                <VerticalStackLayout Grid.Column="0">
+                                    <HorizontalStackLayout>
+                                        <Label VerticalOptions="Center" 
+                                               HorizontalOptions="Start"
+                                                
+                                               FontSize="Subtitle" 
+                                               Text="{Binding User}" />
+                                    <Label VerticalOptions="Center" 
+                                           HorizontalOptions="Start"
+                                           Padding="0,0,0,0" 
+                                           FontSize="Subtitle" 
+                                           Text=":" />
+                                    <Label VerticalOptions="Center" 
+                                               HorizontalOptions="Start"
+                                               Padding="5,0,0,0" 
+                                               FontSize="Subtitle" 
+                                               Text="{Binding Message}" />
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+
+                            </Grid>
+
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ScrollView>
+        </VerticalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>
