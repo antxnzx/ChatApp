@@ -1,5 +1,7 @@
 ﻿using ChatServer.Models;
+using Microsoft.AspNet.SignalR.Messaging;
 using Microsoft.AspNetCore.SignalR;
+using System.Text.Json;
 
 namespace ChatServer.Hubs
 {
@@ -9,19 +11,44 @@ namespace ChatServer.Hubs
     }
     public class ChatHub : Hub<IChatClient>
     {
-        public async Task JoinChat(UserConnection connetion)
+
+        public ChatHub()
         {
-            await Groups.AddToGroupAsync(Context.ConnectionId, connetion.ChatRoom);
+
+
+        }
+        public async Task JoinChat(UserConnection connection)
+        {
+            await Groups.AddToGroupAsync(Context.ConnectionId, connection.ChatRoom);
 
             await Clients
-                .Group(connetion.ChatRoom)
-                .ReceiveMessage("Admin", "test");
-            await Console.Out.WriteLineAsync("afasfasf");
-        }
+                     .Group(connection.ChatRoom)
+                     .ReceiveMessage(connection.UserName, "присоединился к чату");
 
+        }
+        public async Task SendMessage(UserConnection connection, string message)
+        {
+
+            if (connection != null)
+            {
+                await Clients
+                    .Group(connection.ChatRoom)
+                    .ReceiveMessage(connection.UserName, message);
+
+            }
+
+        }
+        public async Task RemoveFromChat(UserConnection connection)
+        {
+
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, connection.ChatRoom);
+            await Clients
+                     .Group(connection.ChatRoom)
+                     .ReceiveMessage(connection.UserName, "вышел из чата");
+        }
         public void NotifyUsers(string login)
         {
-             Console.WriteLine($"{login}"); 
+            Console.WriteLine($"{login}");
         }
     }
 }

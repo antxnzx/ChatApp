@@ -14,50 +14,56 @@
     <ContentPage.BindingContext>
         <viewModels:ChatViewModel x:Name="viewModel"/>
     </ContentPage.BindingContext>
+    <Grid Padding="0,0,0,10" RowSpacing="10" BackgroundColor="{StaticResource BackgroundColor}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="70"/>
+        </Grid.RowDefinitions>
 
 
-    <VerticalStackLayout Spacing="10" Padding="0,10">
-        <VerticalStackLayout>
-            <Frame Margin="0,0,0,10" CornerRadius="15"  BackgroundColor="{StaticResource ForegroundColor}">
+
+            <Frame Grid.Row="0" Margin="0,0,0,10" CornerRadius="15"  BackgroundColor="{StaticResource ForegroundColor}">
                 <Label Style="{StaticResource AllText}"
-                       Text="Все пользователи чата"
+                       Text="{Binding UsernameChat}"
                        FontSize="Title"
                        FontAttributes="Bold"/>
             </Frame>
-            <ScrollView Grid.Row="2" Grid.RowSpan="0" >
-                <CollectionView  ItemsSource="{Binding Messages}">
+            <ScrollView Grid.Row="1" VerticalOptions="End" >
+                <CollectionView VerticalOptions="End"  ItemsSource="{Binding Messages}">
 
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
 
                             <Grid Style="{StaticResource Test}" Margin="5, 5, 5, 5" Padding="0,0,0,5">
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="60"/>
                                 </Grid.RowDefinitions>
-                                <BoxView  Grid.Column="0" 
-                     Color="{StaticResource ForegroundColor}" 
-                     CornerRadius="15"/>
-                                <VerticalStackLayout Grid.Column="0">
-                                    <HorizontalStackLayout>
-                                        <Label VerticalOptions="Center" 
+                                <BoxView  Grid.Column="0" Grid.ColumnSpan="2"
+                                          Color="{StaticResource ForegroundColor}" 
+                                          CornerRadius="15"/>
+                                <HorizontalStackLayout Grid.Column="0" Padding="10,0,20,0" VerticalOptions="Center" HorizontalOptions="End">
+                                    <Label VerticalOptions="Center" 
                                                HorizontalOptions="Start"
-                                                
                                                FontSize="Subtitle" 
+                                               LineBreakMode="WordWrap"
                                                Text="{Binding User}" />
                                     <Label VerticalOptions="Center" 
                                            HorizontalOptions="Start"
                                            Padding="0,0,0,0" 
                                            FontSize="Subtitle" 
                                            Text=":" />
+                                </HorizontalStackLayout>
+                                <VerticalStackLayout Grid.Column="1" Padding="0,0,0,0" VerticalOptions="Center">
                                     <Label VerticalOptions="Center" 
                                                HorizontalOptions="Start"
-                                               Padding="5,0,0,0" 
+                                               LineBreakMode="WordWrap"
                                                FontSize="Subtitle" 
                                                Text="{Binding Message}" />
-                                    </HorizontalStackLayout>
                                 </VerticalStackLayout>
 
                             </Grid>
@@ -66,6 +72,39 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </ScrollView>
-        </VerticalStackLayout>
-    </VerticalStackLayout>
+        <Frame Grid.Row="2" Margin="0,0,0,0" CornerRadius="15"  BackgroundColor="{StaticResource ForegroundColor}">
+        </Frame>
+        <HorizontalStackLayout Padding="5" HorizontalOptions="Center" Grid.Row="2">
+
+                <Frame BackgroundColor="Transparent"
+                    BorderColor="{StaticResource LightGreenColor}"
+                    HorizontalOptions="Fill"
+                    Padding="0"
+                    
+                    CornerRadius="30">
+                    
+
+                        <Entry Text="{Binding Message}"
+                            Placeholder="Ваше сообщение"
+                            TextColor="Black"
+                            FontAttributes="Bold"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Fill"
+                              WidthRequest="500"
+                               
+                            Margin="40, 0, 40, 0"/>
+                    
+                </Frame>
+                <Button Text="Отправить" 
+                    BackgroundColor="{StaticResource MainColor}"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                        HorizontalOptions="End"
+                    CornerRadius="30"
+                    WidthRequest="200"
+                    Margin="0, 0, 0, 0"
+                    Command="{Binding SendMessageCommand}"/>
+            </HorizontalStackLayout>
+        
+    </Grid>
 </ContentPage>

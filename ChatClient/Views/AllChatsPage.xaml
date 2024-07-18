@@ -8,7 +8,8 @@
              BackgroundColor="{StaticResource BackgroundColor}"
              NavigationPage.HasNavigationBar="False"
              Shell.NavBarIsVisible="False"
-             Shell.TabBarIsVisible="True">
+             Shell.TabBarIsVisible="True"
+             NavigatedTo="ContentPage_NavigatedTo">
 
     <ContentPage.BindingContext>
         <viewModels:AllChatsViewModel x:Name="viewModel"/>
@@ -24,7 +25,7 @@
                            FontAttributes="Bold"/>
                 </Frame>
                 <ScrollView Grid.Row="2" Grid.RowSpan="0" >
-                    <CollectionView  ItemsSource="{Binding Users}"
+                    <CollectionView x:Name="users"  ItemsSource="{Binding Users}"
                         SelectionMode="Single"
                         SelectionChangedCommand="{Binding StartChatCommand}"
                         SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=SelectedItem}">
@@ -41,13 +42,20 @@
                                     <BoxView  Grid.Column="0" 
                          Color="{StaticResource ForegroundColor}" 
                          CornerRadius="15"/>
-                                    <VerticalStackLayout Grid.Column="0">
+                                    <VerticalStackLayout Margin="20,0,0,0" Grid.Column="0">
+                                    <HorizontalStackLayout>
+                                        <Label VerticalOptions="Center" 
+                                               HorizontalOptions="Start"
+        
+                                               FontSize="Subtitle" 
+                                               Text="Логин:" />
                                         <Label VerticalOptions="Center" 
                                                HorizontalOptions="Start"
                                                 
                                                FontSize="Subtitle" 
                                                Text="{Binding UserLogin}" />
-                                        <HorizontalStackLayout>
+                                    </HorizontalStackLayout>
+                                    <HorizontalStackLayout>
                                             <Label VerticalOptions="Center" 
                                                    HorizontalOptions="Start"
                                                     

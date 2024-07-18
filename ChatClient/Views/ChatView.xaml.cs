@@ -13,4 +13,10 @@ public partial class ChatView : ContentPage
         //base.OnAppearing();
 
     }
+
+    protected override async void OnDisappearing()
+    {
+        await viewModel.RemoveFromChat();
+    }
+    
 }

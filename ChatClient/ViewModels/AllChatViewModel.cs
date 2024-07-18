@@ -48,11 +48,11 @@ namespace ChatClient.ViewModels
             {
                 int id = App.UserDetails.id;
                 string chatroom = user.Id > id ? $"{id}{user.Id}" : $"{user.Id}{id}";
-                
+                string name = $"{user.Name}" + "_" + $"{user.Surname}";
                 try
                 {
-                    
-                    await Shell.Current.GoToAsync($"{nameof(ChatView)}?chatroom={chatroom}");
+
+                    await Shell.Current.GoToAsync($"{nameof(ChatView)}?chatroom={chatroom}&user={name}");
 
                 }
                 catch (Exception)

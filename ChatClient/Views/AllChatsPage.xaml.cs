@@ -12,4 +12,9 @@ public partial class AllChatsPage : ContentPage
         //base.OnAppearing();
 
     }
+
+    private void ContentPage_NavigatedTo(object sender, NavigatedToEventArgs e)
+    {
+        users.SelectedItem = null;
+    }
 }
