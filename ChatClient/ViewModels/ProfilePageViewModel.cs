@@ -1,14 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ChatClient.Views;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ChatClient.Models;
-using System.Net.Http.Json;
 using Microsoft.AspNetCore.SignalR.Client;
+using System.Collections.ObjectModel;
 
 namespace ChatClient.ViewModels
 {
@@ -16,11 +11,13 @@ namespace ChatClient.ViewModels
     {
         [ObservableProperty]
         private UserBasicInfo? user;
+        [ObservableProperty]
+        private ObservableCollection<UserSubs> subs;
        
     
         public ProfilePageViewModel() 
         {
-            
+            Subs = new ObservableCollection<UserSubs>();
         }
 
         [RelayCommand]
@@ -44,6 +41,14 @@ namespace ChatClient.ViewModels
         }
 
         
+        public void RefreshData()
+        {
+            Subs.Clear();
+            foreach (var item in User.Subscriptions)
+            {
+                Subs.Add(item);
+            }
+        }
     }
 
 }

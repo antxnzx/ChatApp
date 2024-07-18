@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ChatClient.Views.UserInfoTablePage"
+             Title="Таблица UserInfo"
+    xmlns:viewModels="clr-namespace:ChatClient.ViewModels.AdminPanel"
+         NavigationPage.HasNavigationBar="True"
+         Shell.NavBarIsVisible="True"
+         Shell.TabBarIsVisible="False"
+         Shell.BackgroundColor="{StaticResource MainColor}"
+         BackgroundColor="{StaticResource BackgroundColor}">
+    <ContentPage.BindingContext>
+        <viewModels:UserInfoViewModel x:Name="viewModel"/>
+    </ContentPage.BindingContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" 
+           Grid.Column="0" 
+           HorizontalOptions="Center" 
+           Text="Все записи в БД" 
+           FontSize="Title"/>
+        <Label Grid.Row="0" 
+            Grid.Column="1" 
+            HorizontalOptions="Center" 
+            Text="Выделенная запись" 
+            FontSize="Title"/>
+
+        <ScrollView Grid.Row="1" Grid.Column="0" >
+            <CollectionView x:Name="Collectionview" ItemsSource="{Binding LoginInfos}"
+                SelectionMode="Single" 
+                 SelectedItem="{Binding LoginInfo}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <HorizontalStackLayout>
+                            <Label VerticalOptions="Center" 
+                            HorizontalOptions="Center"
+                            FontSize="Subtitle" Text="{Binding Id}" />
+                            <Label Text=" " Padding="5,0"/>
+                            <Label VerticalOptions="Center" 
+                                HorizontalOptions="Center"
+                                 FontSize="Subtitle" Text="{Binding UserLogin}" />
+                            <Label Text=" " Padding="5,0"/>
+                            <Label VerticalOptions="Center" 
+                                HorizontalOptions="Center"
+                                FontSize="Subtitle" Text="{Binding Name}" />
+                            <Label Text=" " Padding="5,0"/>
+                            <Label VerticalOptions="Center" 
+                             HorizontalOptions="Center"
+                             FontSize="Subtitle" Text="{Binding Surname}" />
+                            <Label Text=" " Padding="5,0"/>
+                            <Label VerticalOptions="Center" 
+                             HorizontalOptions="Center"
+                             FontSize="Subtitle" Text="{Binding IsAdmin}" />
+                        </HorizontalStackLayout>
+
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+
+        <VerticalStackLayout Grid.Row="1" Grid.Column="1">
+            <Label  
+    Grid.Column="1" 
+    HorizontalOptions="Center" 
+    Text="Login"
+    FontSize="Title"/>
+            <Entry Text="{Binding LoginInfo.UserLogin}"/>
+            <Label  
+            Grid.Column="1" 
+            HorizontalOptions="Center" 
+            Text="Name"
+            FontSize="Title"/>
+            <Entry Text="{Binding LoginInfo.Name}"/>
+            <Label  
+                Grid.Column="1" 
+                HorizontalOptions="Center" 
+                Text="Surname"
+                FontSize="Title"/>
+            <Entry Text="{Binding LoginInfo.Surname}"/>
+            <Label  
+                Grid.Column="1" 
+                HorizontalOptions="Center" 
+                Text="IsAdmin"
+                FontSize="Title"/>
+            <CheckBox HorizontalOptions="Center" IsChecked="{Binding LoginInfo.IsAdmin}"/>
+        </VerticalStackLayout>
+        <VerticalStackLayout Grid.Column="0"  Grid.ColumnSpan="2" Grid.Row="2">
+            <HorizontalStackLayout HorizontalOptions="Center">
+                <Button Text="Удалить" BackgroundColor="{StaticResource MainColor}"
+                    Command="{Binding DeleteFromDbCommand}"
+                    Padding="20,0"/>
+                <Button Text="Снять выделение" BackgroundColor="{StaticResource MainColor}"
+                Clicked="Button_Clicked"
+                    Padding="20,0"/>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout HorizontalOptions="Center">
+                <Button Text="Обновить" BackgroundColor="{StaticResource MainColor}"
+                Command="{Binding UpdateToDbCommand}"
+                    HorizontalOptions="Fill"
+                    Padding="20,0"/>
+                <Button Text="Добавить" BackgroundColor="{StaticResource MainColor}"
+                 Command="{Binding AddToDbCommand}"
+                    HorizontalOptions="Fill"
+                    Padding="20,0"/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

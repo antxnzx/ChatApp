@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ChatClient.Views.AdminPanelPage"
+             Title="AdminPanelPage"
+             Shell.NavBarIsVisible="False"
+         Shell.NavBarHasShadow="True"
+         Shell.BackgroundColor="{StaticResource MainColor}"
+         BackgroundColor="{StaticResource BackgroundColor}" 
+         xmlns:viewModels="clr-namespace:ChatClient.ViewModels.AdminPanel">
+    <ContentPage.BindingContext>
+        <viewModels:AdminPanelViewModel x:Name="viewModel"/>
+    </ContentPage.BindingContext>
+    <VerticalStackLayout>
+        <Button Text="Таблица UserLoginInfo" BackgroundColor="{StaticResource MainColor}"
+        Command="{Binding GoToUserLoginInfoPageCommand}"/>
+        <Button Text="Таблица UserInfo" BackgroundColor="{StaticResource MainColor}"
+        Command="{Binding GoToUserInfoPageCommand}"/>
+        <Button Text="Таблица UserSubs" BackgroundColor="{StaticResource MainColor}"
+        Command="{Binding GoToUserSubsPageCommand}"/>
+    </VerticalStackLayout>
+</ContentPage>

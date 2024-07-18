@@ -15,8 +15,9 @@ public partial class HomePage : ContentPage
     protected override async void OnAppearing()
     {
         await viewModel.GetAllUsers();
+        viewModel.Admin = App.UserDetails.IsAdmin == 1;
         //base.OnAppearing();
-        
+
     }
 
     

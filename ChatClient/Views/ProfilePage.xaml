@@ -52,7 +52,7 @@
                     Command="{Binding EditCommand}"/>
         </HorizontalStackLayout>
         <ScrollView Grid.Row="2" Grid.RowSpan="0" >
-            <CollectionView x:Name="dictList" ItemsSource="{Binding User.Subscriptions}"
+            <CollectionView x:Name="dictList" ItemsSource="{Binding Subs}"
                         SelectionMode="None">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>

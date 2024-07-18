@@ -10,6 +10,9 @@ public partial class ProfilePage : ContentPage
     protected override void OnAppearing()
     {
         viewModel.User = App.UserDetails;
+        viewModel.RefreshData();
        // base.OnAppearing();
     }
+
+   
 }

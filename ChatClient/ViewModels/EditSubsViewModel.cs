@@ -53,7 +53,11 @@ namespace ChatClient.ViewModels
                 List<UserSubs>? subsfromdb = await client.GetFromJsonAsync<List<UserSubs>>(uri);
                 if (subsfromdb != null)
                 {
-                    App.UserDetails.Subscriptions = subsfromdb;
+                    App.UserDetails.Subscriptions.Clear();
+                    foreach (var user in subsfromdb)
+                    {
+                        App.UserDetails.Subscriptions.Add(user);
+                    }
                 }
             }
             foreach (var sub in App.UserDetails.Subscriptions)

@@ -19,17 +19,18 @@ namespace ChatServer
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
-            app.Map("/login", async (DataBaseContext db, HttpContext context) => {
+            app.Map("/login", async (DataBaseContext db, HttpContext context) =>
+            {
                 Logininfo? info = await context.Request.ReadFromJsonAsync<Logininfo>();
                 bool response = false;
                 if (info != null)
                 {
-                    response = await LoginService.CheckLogin(db,info);
+                    response = await LoginService.CheckLogin(db, info);
                 }
                 return response;
             });
-            
-            
+
+
             app.Map("/register/{dbid:int}", async (DataBaseContext db, HttpContext context, int dbid) =>
             {
                 bool response = false;
@@ -61,7 +62,7 @@ namespace ChatServer
             {
                 UserInfo? user = await DbRequests.GetUserInfo(db, context);
                 return user;
-                
+
             });
 
             app.Map("/subs", async (DataBaseContext db, HttpContext context) =>
@@ -71,21 +72,77 @@ namespace ChatServer
 
             app.Map("/users", async (DataBaseContext db, HttpContext context) =>
             {
-                return await DbRequests.GetUsers(db, context);
+                return await DbRequests.GetUsersInfos(db, context);
             });
 
 
             app.Map("/addsub", async (DataBaseContext db, HttpContext context) =>
             {
-                return await DbRequests.AddSub(db, context);
+                return await DbRequests.CreateSub(db, context);
             });
             app.Map("/removesub", async (DataBaseContext db, HttpContext context) =>
             {
-                return await DbRequests.RemoveSub(db, context);
+                return await DbRequests.DeleteSub(db, context, -1);
             });
 
+
+            app.MapGet("/UserLoginInfo", async (DataBaseContext db, HttpContext context) =>
+            {
+                return await DbRequests.GetUsersLoginInfos(db, context);
+            });
+            app.MapPost("/UserLoginInfo", async (DataBaseContext db, HttpContext context) =>
+            {
+                return await DbRequests.CreateUserLoginInfo(db, context);
+            });
+            app.MapDelete("/UserLoginInfo/{id:int}", async (DataBaseContext db, HttpContext context, int id) =>
+            {
+                return await DbRequests.DeleteUserLoginInfo(db, context, id);
+            });
+            app.MapPut("/UserLoginInfo", async (DataBaseContext db, HttpContext context) =>
+            {
+                return await DbRequests.UpdateUserLoginInfo(db, context);
+            });
+
+            //userInfo
+
+            app.MapGet("/UserInfo", async (DataBaseContext db, HttpContext context) =>
+            {
+                return await DbRequests.GetUsersInfos(db, context);
+            });
+            app.MapPost("/UserInfo", async (DataBaseContext db, HttpContext context) =>
+            {
+                return await DbRequests.CreateUserInfo(db, context);
+            });
+            app.MapDelete("/UserInfo/{id:int}", async (DataBaseContext db, HttpContext context, int id) =>
+            {
+                return await DbRequests.DeleteUserInfo(db, context, id);
+            });
+            app.MapPut("/UserInfo", async (DataBaseContext db, HttpContext context) =>
+            {
+                return await DbRequests.UpdateUserInfo(db, context);
+            });
+
+            //usersubs
+            app.MapGet("/UserSubs", async (DataBaseContext db, HttpContext context) =>
+            {
+                return await DbRequests.GetUsersSubs(db, context);
+            });
+            app.MapPost("/UserSubs", async (DataBaseContext db, HttpContext context) =>
+            {
+                return await DbRequests.CreateSub(db, context);
+            });
+            app.MapDelete("/UserSubs/{id:int}", async (DataBaseContext db, HttpContext context, int id) =>
+            {
+                return await DbRequests.DeleteSub(db, context, id);
+            });
+            app.MapPut("/UserSubs", async (DataBaseContext db, HttpContext context) =>
+            {
+                return await DbRequests.UpdateSub(db, context);
+            });
+
+
             app.MapHub<ChatHub>("/chat");
-            
+
             app.Run();
         }
     }

@@ -1,5 +1,6 @@
 ﻿using ChatClient.Models;
 using ChatClient.ViewModels;
+using ChatClient.ViewModels.AdminPanel;
 using ChatClient.Views;
 using Microsoft.Extensions.Logging;
 
@@ -23,6 +24,17 @@ namespace ChatClient
             builder.Services.AddScoped<HomePage>();
             builder.Services.AddSingleton<RegisterPage>();
             builder.Services.AddSingleton<AllChatsPage>();
+            
+            builder.Services.AddSingleton<AdminPanelPage>();
+            builder.Services.AddSingleton<UserSubsTablePage>();
+            builder.Services.AddSingleton<UserInfoTablePage>();
+            builder.Services.AddSingleton<UserLoginInfoPage>();
+
+            builder.Services.AddSingleton<AdminPanelViewModel>();
+            builder.Services.AddSingleton<UserSubsViewModel>();
+            builder.Services.AddSingleton<UserInfoViewModel>();
+            builder.Services.AddSingleton<UserLoginViewModel>();
+
             builder.Services.AddTransient<ChatView>();
             builder.Services.AddTransient<EditSubsView>();
             builder.Services.AddScoped<ProfilePage>();

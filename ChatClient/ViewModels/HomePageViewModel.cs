@@ -1,8 +1,8 @@
 ﻿
 using ChatClient.Models;
-
+using ChatClient.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
-
+using CommunityToolkit.Mvvm.Input;
 using System.Net.Http.Json;
 
 
@@ -31,6 +31,12 @@ namespace ChatClient.ViewModels
                     Users.AddRange(usersfromdb);
                 }
             }
+        }
+
+        [RelayCommand]
+        async Task GoToAdminPanel()
+        {
+           await Shell.Current.GoToAsync($"{nameof(AdminPanelPage)}");
         }
 
 
