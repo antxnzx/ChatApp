@@ -6,4 +6,10 @@ public partial class ProfilePage : ContentPage
 	{
 		InitializeComponent();
 	}
+
+    protected override void OnAppearing()
+    {
+        viewModel.User = App.UserDetails;
+       // base.OnAppearing();
+    }
 }

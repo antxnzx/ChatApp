@@ -14,9 +14,9 @@ namespace ChatClient.ViewModels
     public partial class LoginPageViewModel : BaseViewModel
     {
         [ObservableProperty]
-        private string? emailLog;
+        private string? emailLog = "";
         [ObservableProperty]
-        private string? password;
+        private string? password = "";
         [ObservableProperty]
         private string? logininfo = "";
 
@@ -88,7 +88,7 @@ namespace ChatClient.ViewModels
                 catch (Exception)
                 {
                     Logininfo = "Нет связи с сервером";
-                    
+
                 }
 
             }
@@ -121,6 +121,14 @@ namespace ChatClient.ViewModels
         async Task Register()
         {
             await Shell.Current.GoToAsync($"{nameof(RegisterPage)}");
+        }
+
+        public void CleanFields()
+        {
+            EmailLog = "";
+            Password = "";
+            Logininfo = "";
+            isUserDataAccepted = false;
         }
     }
 }

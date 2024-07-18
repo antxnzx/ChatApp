@@ -20,22 +20,22 @@ namespace ChatClient
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
-            builder.Services.AddTransient<LoginPage>();
-            builder.Services.AddTransient<HomePage>();
-            builder.Services.AddTransient<RegisterPage>();
-            builder.Services.AddTransient<AllChatsPage>();
+            builder.Services.AddScoped<LoginPage>();
+            builder.Services.AddScoped<HomePage>();
+            builder.Services.AddSingleton<RegisterPage>();
+            builder.Services.AddSingleton<AllChatsPage>();
             builder.Services.AddTransient<ChatView>();
            
 
-            builder.Services.AddTransient<ProfilePage>();
+            builder.Services.AddScoped<ProfilePage>();
 
-            builder.Services.AddTransient<LoginPageViewModel>();
-            builder.Services.AddTransient<HomePageViewModel>();
-            builder.Services.AddTransient<RegisterPageViewModel>();
-            builder.Services.AddTransient<AllChatsViewModel>();
+            builder.Services.AddScoped<LoginPageViewModel>();
+            builder.Services.AddScoped<HomePageViewModel>();
+            builder.Services.AddSingleton<RegisterPageViewModel>();
+            builder.Services.AddSingleton<AllChatsViewModel>();
             builder.Services.AddTransient<ChatViewModel>();
 
-            builder.Services.AddTransient<ProfilePageViewModel>();
+            builder.Services.AddScoped<ProfilePageViewModel>();
 
             return builder.Build();
         }

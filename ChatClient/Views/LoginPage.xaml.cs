@@ -8,4 +8,10 @@ public partial class LoginPage : ContentPage
 	{
 		InitializeComponent();		
 	}
+
+    protected override void OnAppearing()
+    {
+        viewModel.CleanFields();
+        //base.OnAppearing();
+    }
 }

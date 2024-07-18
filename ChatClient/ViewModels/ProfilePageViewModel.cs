@@ -17,9 +17,9 @@ namespace ChatClient.ViewModels
         private UserBasicInfo? user;
        
     
-        public  ProfilePageViewModel() 
+        public ProfilePageViewModel() 
         {
-            user = App.UserDetails;  
+            
         }
 
         [RelayCommand]
@@ -29,8 +29,9 @@ namespace ChatClient.ViewModels
             {
                 Preferences.Remove(nameof(App.UserDetails));
             }
-
+            App.UserDetails = null;
             await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
+            
         }
 
         
