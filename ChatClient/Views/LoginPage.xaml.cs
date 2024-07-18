@@ -1,5 +1,7 @@
 
 
+using ChatClient.Models;
+
 namespace ChatClient.Views;
 
 public partial class LoginPage : ContentPage
@@ -14,4 +16,6 @@ public partial class LoginPage : ContentPage
         viewModel.CleanFields();
         //base.OnAppearing();
     }
+
+    
 }

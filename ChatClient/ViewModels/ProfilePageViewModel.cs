@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ChatClient.Models;
 using System.Net.Http.Json;
+using Microsoft.AspNetCore.SignalR.Client;
 
 namespace ChatClient.ViewModels
 {
@@ -25,6 +26,8 @@ namespace ChatClient.ViewModels
         [RelayCommand]
         async Task SignOut()
         {
+            await App.hubConnection.InvokeAsync("NotifyUsers", App.UserDetails.Login, "не в сети");
+            await App.hubConnection.StopAsync();
             if (Preferences.ContainsKey(nameof(App.UserDetails)))
             {
                 Preferences.Remove(nameof(App.UserDetails));
@@ -32,6 +35,12 @@ namespace ChatClient.ViewModels
             App.UserDetails = null;
             await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
             
+        }
+
+        [RelayCommand]
+        async Task Edit()
+        {
+            await Shell.Current.GoToAsync($"{nameof(EditSubsView)}");
         }
 
         

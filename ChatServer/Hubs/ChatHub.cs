@@ -8,6 +8,7 @@ namespace ChatServer.Hubs
     public interface IChatClient
     {
         public Task ReceiveMessage(string userName, string message);
+        public Task Notify(string userName, string status);
     }
     public class ChatHub : Hub<IChatClient>
     {
@@ -46,9 +47,9 @@ namespace ChatServer.Hubs
                      .Group(connection.ChatRoom)
                      .ReceiveMessage(connection.UserName, "вышел из чата");
         }
-        public void NotifyUsers(string login)
+        public async void NotifyUsers(string login, string status)
         {
-            Console.WriteLine($"{login}");
+            await Clients.Others.Notify(login, status);
         }
     }
 }

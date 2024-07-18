@@ -14,5 +14,7 @@ namespace ChatClient
 
             MainPage = new AppShell();
         }
+
+        
     }
 }

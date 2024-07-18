@@ -10,6 +10,7 @@ namespace ChatClient
             Routing.RegisterRoute(nameof(HomePage), typeof(HomePage));
             Routing.RegisterRoute(nameof(RegisterPage), typeof(RegisterPage));
             Routing.RegisterRoute(nameof(ChatView), typeof(ChatView));
+            Routing.RegisterRoute(nameof(EditSubsView), typeof(EditSubsView));
         }
     }
 }

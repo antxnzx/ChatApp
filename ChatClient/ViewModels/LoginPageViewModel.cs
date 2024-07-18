@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.SignalR.Client;
 
 
 
+
 namespace ChatClient.ViewModels
 {
     public partial class LoginPageViewModel : BaseViewModel
@@ -71,8 +72,12 @@ namespace ChatClient.ViewModels
                                                 .Build();
                         try
                         {
+                            App.hubConnection.On("Notify", (Action<string, string>)((username, status) =>
+                            {
+                                NotifyUser(username, status);
+                            }));
                             await App.hubConnection.StartAsync();
-                            await App.hubConnection.InvokeAsync("NotifyUsers", basicInfo.Login);
+                            await App.hubConnection.InvokeAsync("NotifyUsers", basicInfo.Login, "в сети");
                         }
                         catch (Exception)
                         {
@@ -97,6 +102,22 @@ namespace ChatClient.ViewModels
                 Logininfo = "Поля не заполнены";
             }
         }
+        async void NotifyUser(string username, string status)
+        {
+            UserSubs? info = App.UserDetails.Subscriptions.Where(u => u.Subscription == username).FirstOrDefault();
+            if (info != null)
+            {
+                if (info.Subscription == username)
+                {
+                    MainThread.BeginInvokeOnMainThread(async () =>
+                    {
+                        await Shell.Current.CurrentPage.DisplayAlert($"{username}", $"{status}", "Ок");
+                    });
+                }
+            }
+        }
+
+
         async Task GetInformation(UserBasicInfo basicInfo)
         {
             Uri uri = new Uri(string.Format($"http://localhost:5000/profile?login={basicInfo.Login}", string.Empty));

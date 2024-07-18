@@ -45,5 +45,44 @@ namespace ChatServer.Services
 
             return users;
         }
+
+        public static async Task<bool> AddSub(DataBaseContext db, HttpContext context)
+        {
+            bool response = false;
+            UserSubs? user = await context.Request.ReadFromJsonAsync<UserSubs>();
+
+            if (user != null)
+            {
+                UserSubs? user1 = await db.UserSubs
+                     .Where(u => u == user)
+                     .FirstOrDefaultAsync();
+                if (user1 == null)
+                {
+                    await db.UserSubs.AddAsync(user);
+                    await db.SaveChangesAsync();
+                    response = true;
+                }
+            }
+            return response;
+        }
+        public static async Task<bool> RemoveSub(DataBaseContext db, HttpContext context)
+        {
+            bool response = false;
+            UserSubs? user = await context.Request.ReadFromJsonAsync<UserSubs>();
+
+            if (user != null)
+            {
+                UserSubs? user1 = await db.UserSubs
+                     .Where(u => u == user)
+                     .FirstOrDefaultAsync();
+                if (user1 != null)
+                {
+                     db.UserSubs.Remove(user);
+                    await db.SaveChangesAsync();
+                    response = true;
+                }
+            }
+            return response;
+        }
     }
 }

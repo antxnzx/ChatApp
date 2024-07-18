@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ChatClient.Views.EditSubsView"
+             Title="EditSubsView"       
+             xmlns:viewModels="clr-namespace:ChatClient.ViewModels"
+            NavigationPage.HasNavigationBar="True"
+            Shell.NavBarIsVisible="False"
+            Shell.TabBarIsVisible="False"
+            Shell.BackgroundColor="{StaticResource MainColor}"
+             BackgroundColor="{StaticResource BackgroundColor}">
+    <ContentPage.BindingContext>
+        <viewModels:EditSubsViewModel x:Name="viewModel"/>
+    </ContentPage.BindingContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="70"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" 
+               Grid.Column="0" 
+               HorizontalOptions="Center" 
+               Text="Подписки" 
+               FontSize="Title"/>
+        <Label Grid.Row="0" 
+        Grid.Column="1" 
+        HorizontalOptions="Center" 
+        Text="Все пользователи" 
+        FontSize="Title"/>
+
+        <ScrollView Grid.Row="1" Grid.Column="0" >
+            <CollectionView  ItemsSource="{Binding Subs}"
+                SelectionMode="Single" Style="{StaticResource Pick}"
+                             SelectedItem="{Binding Subscription}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+
+                        <Grid Style="{StaticResource Test}" Margin="5, 5, 5, 5" Padding="0,0,0,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="60"/>
+                            </Grid.RowDefinitions>
+                            <BoxView  Grid.Column="0" 
+                         Color="{StaticResource ForegroundColor}" 
+                         CornerRadius="15"/>
+                            <Label VerticalOptions="Center" 
+                       HorizontalOptions="Center"
+                       Grid.Column="0" FontSize="Subtitle" Text="{Binding Subscription}" />
+                        </Grid>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+
+        <ScrollView Grid.Row="1" Grid.Column="1" >
+            <CollectionView  ItemsSource="{Binding Users}"
+                             
+        SelectionMode="Single" Style="{StaticResource Pick}"
+                     SelectedItem="{Binding Userinfo}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+
+                        <Grid Style="{StaticResource Test}" Margin="5, 5, 5, 5" Padding="0,0,0,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="60"/>
+                            </Grid.RowDefinitions>
+                            <BoxView  Grid.Column="0" 
+                                 Color="{StaticResource ForegroundColor}" 
+                                 CornerRadius="15"/>
+                            <Label VerticalOptions="Center" 
+                                   HorizontalOptions="Center"
+                                   Grid.Column="0" FontSize="Subtitle" Text="{Binding UserLogin}" />
+                        </Grid>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+
+
+        <VerticalStackLayout Grid.Row="2" Grid.Column="0" Margin="10" VerticalOptions="Center">
+            <Button Text="Удалить" BackgroundColor="{StaticResource MainColor}"
+            Command="{Binding RemoveSubCommand}"/>
+        </VerticalStackLayout>
+        <VerticalStackLayout Grid.Row="2" Grid.Column="1" Margin="10" VerticalOptions="Center">
+            <Button Text="Добавить" BackgroundColor="{StaticResource MainColor}"
+            Command="{Binding AddSubCommand}"/>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
