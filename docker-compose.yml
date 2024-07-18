@@ -1,8 +1,0 @@
-version: '3.4'
-
-services:
-  chatserver.redis:
-    image: redis
-    build:
-      context: .
-      dockerfile: ChatServer\Dockerfile
