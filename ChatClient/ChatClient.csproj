@@ -43,6 +43,8 @@
 		<AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
 		<GenerateTestArtifacts>True</GenerateTestArtifacts>
 		<HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+		<Configurations>Debug;Release;server_all</Configurations>
+		<Platforms>AnyCPU;x86;x64</Platforms>
 	</PropertyGroup>
 
 	<ItemGroup>
